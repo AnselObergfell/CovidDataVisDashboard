@@ -15,7 +15,7 @@ color_dict = {state: color for state, color in zip(states, colors)}
 min_week = df['MMWR_week'].min()
 max_week = df['MMWR_week'].max()-1
 week_range_values = df['MMWR_week'].unique()
-week_range_index = list(range(len(week_range_values)))
+week_range_index = list(range(min_week, max_week))
 
 app.layout = html.Div([
     html.H1("COVID-19 Vaccination Data Dashboard"),
@@ -59,8 +59,8 @@ app.layout = html.Div([
     [Input('state-checklist', 'value'), Input('week-range-slider', 'value')]
 )
 def update_line_plot(selected_states, week_range_index):
-    start_week = week_range_values[week_range_index[0]]
-    end_week = week_range_values[week_range_index[1]]
+    start_week = week_range_index[0]
+    end_week = week_range_index[1]
     
     fig = px.line(title='Administered Doses Over Time')
     for state in selected_states:
